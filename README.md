@@ -11,6 +11,22 @@ npm install electron --save-dev
 npm install electron nodemailer
 ```
 
+## 邮局配置说明
+
+说明与注意事项
+163 邮箱授权码：如果你使用的是 163 邮箱，请确保已在 163 邮箱的设置中生成了授权码，并用该授权码代替密码字段。
+
+Gmail 应用专用密码：对于 Gmail，如果你开启了两步验证，需要生成并使用应用专用密码，而不是直接使用邮箱密码。你可以在 Google Account 的安全设置中生成应用专用密码。
+
+SMTP 服务器：不同邮箱的 SMTP 服务器地址和端口可能有所不同，上述代码中给出了 163 邮箱和 Gmail 的配置。
+
+service 选项：对于 Gmail，nodemailer 支持通过 service 选项简化配置，因此不需要手动设置 host 和 port。
+
+运行脚本时，请确保你已经安装了 nodemailer，并且代码中的邮箱账号、密码或授权码已正确填写。
+
+
+
+
 ## builder
 
 1. 使用 electron-builder 打包
