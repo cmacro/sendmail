@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mail Sender</title>
+    <!--<style></style>-->
+    <link rel="stylesheet" href="style3.css">
+</head>
+<body>
+    <div class="container">
+                <!-- Email Sending Form -->
+         <div class="left-panel">
+        <form id="emailForm">
+          <h2>Send Email</h2>
+    <div>
+        <label>From:</label>
+        <input type="email" id="fromEmail" required>
+    </div>
+    <div>
+        <label>To:</label>
+        <input type="text" id="toEmails" required>
+    </div>
+    <div>
+        <label>标题:</label>
+        <input type="text" id="subject" required>
+    </div>
+    <div>
+        <label>正文:</label>
+        <textarea id="message" required></textarea>
+    </div>
+    <div>
+        <label>插入图片:</label>
+        <input type="file" id="inlineImage" accept="image/*">
+    </div>
+    <div>
+        <label>附件:</label>
+        <input type="file" id="attachments" multiple>
+    </div>
+    <button type="submit">发送邮件</button>
+        </form>
+         </div>
+<!-- SMTP Account Settings -->
+                <div class="right-panel">  
+
+        <form id="smtpSettingsForm">
+            <h2>SMTP 帐号设置</h2>
+            <div>
+                <label>SMTP Host:</label>
+                <input type="text" id="smtpHost" required>
+            </div>
+            <div>
+                <label>SMTP Port:</label>
+                <input type="number" id="smtpPort" required>
+            </div>
+            <div>
+                <label>
+                    <input type="checkbox" id="smtpSecure">
+                    安全(SSL)
+                </label>
+            </div>
+            <div>
+                <label>Email:</label>
+                <input type="email" id="smtpEmail" required>
+            </div>
+            <div>
+                <label>Password:</label>
+                <input type="password" id="smtpPassword" required>
+            </div>
+            <button type="submit">Save SMTP</button>
+        </form>
+        </div>
+
+
+        <p id="status"></p>
+    </div>
+
+    <script src="send.js"> </script>
+</body>
+</html>
+
