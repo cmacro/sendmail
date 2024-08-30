@@ -13,17 +13,63 @@ npm install electron nodemailer
 
 ## 邮局配置说明
 
-说明与注意事项
-163 邮箱授权码：如果你使用的是 163 邮箱，请确保已在 163 邮箱的设置中生成了授权码，并用该授权码代替密码字段。
 
-Gmail 应用专用密码：对于 Gmail，如果你开启了两步验证，需要生成并使用应用专用密码，而不是直接使用邮箱密码。你可以在 Google Account 的安全设置中生成应用专用密码。
+**163 邮箱授权码：** 使用的是 163 邮箱，确保已在 163 邮箱的设置中生成了授权码，并用该授权码代替密码字段。
 
-SMTP 服务器：不同邮箱的 SMTP 服务器地址和端口可能有所不同，上述代码中给出了 163 邮箱和 Gmail 的配置。
+**Gmail 应用专用密码：** 如果开启了两步验证，需要生成并使用应用专用密码，而不是直接使用邮箱密码。可以在 Google Account 的安全设置中生成应用专用密码。
 
-service 选项：对于 Gmail，nodemailer 支持通过 service 选项简化配置，因此不需要手动设置 host 和 port。
+**SMTP 服务器：** 不同邮箱的 SMTP 服务器地址和端口可能有所不同。
 
-运行脚本时，请确保你已经安装了 nodemailer，并且代码中的邮箱账号、密码或授权码已正确填写。
+**service 选项：** 对于 Gmail，nodemailer 支持通过 service 选项简化配置，因此不需要手动设置 host 和 port。
 
+运行脚本时确保你已经安装了 nodemailer，并且代码中的邮箱账号、密码或授权码已正确填写。
+
+## Send code
+
+
+```js
+const nodemailer = require('nodemailer');
+
+// Gmail
+// 创建一个SMTP客户端配置
+// let transporter = nodemailer.createTransport({
+//     service: 'gmail', // 使用 Gmail 的 SMTP 服务
+//     auth: {
+//         user: 'your-email@gmail.com', // 你的Gmail邮箱账号
+//         pass: 'your-email-password' // 你的Gmail邮箱密码或应用专用密码
+//     }
+// });
+
+// 163 邮箱
+// 创建一个SMTP客户端配置
+let transporter = nodemailer.createTransport({
+    host: 'smtp.163.com', // 163 邮箱的 SMTP 服务器地址
+    port: 465, // SMTP端口，163 邮箱使用SSL的端口为465
+    secure: true, // 端口为465时需要设为true
+    auth: {
+        user: 'your-email@163.com', // 你的163邮箱账号
+        pass: 'your-email-password' // 你的163邮箱密码或授权码
+    }
+});
+
+
+// 设置邮件内容
+let mailOptions = {
+    from: '"Sender Name" <your-email@gmail.com>', // 发件人
+    to: 'recipient@example.com', // 收件人
+    subject: 'Hello from Gmail', // 邮件主题
+    text: 'Hello world!', // 文本内容
+    html: '<b>Hello world!</b>' // HTML内容
+};
+
+// 发送邮件
+transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+        return console.log(error);
+    }
+    console.log('Message sent: %s', info.messageId);
+});
+```
 
 
 
@@ -100,18 +146,10 @@ npm run build:win
 
 3. 代码签名 (可选)
 
-在将应用发布之前，尤其是 macOS 应用，建议进行代码签名。如果你有开发者证书，可以使用 electron-builder 的 --mac 选项进行签名：
+Mac 代码签名
 
 ```bash
 electron-builder --mac --sign "Developer ID Application: Your Name (XXXXXXXXXX)"
 ```
 
-对于 Windows，你可以使用 electron-builder 的 win 选项结合 .pfx 证书文件进行签名。
-
-**总结**
-
-- electron-builder 提供了更全面的配置选项，适合需要完整打包和发布流程的项目。 
-- electron-packager 简单易用，适合轻量级的打包需求。 
-
-
-你可以根据项目需求选择适合的工具来打包你的 Electron 应用。
+Windows，你可以使用 .pfx 证书文件进行签名。
