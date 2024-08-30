@@ -1,0 +1,7 @@
+{
+  "host": "smtp.163.com",
+  "port": "465",
+  "secure": true,
+  "user": "fpack@163.com",
+  "pass": "SVVTCPXAHQPFIZDN"
+}

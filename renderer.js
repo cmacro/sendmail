@@ -17,7 +17,7 @@ smtpSettingsForm.addEventListener('submit', (e) => {
     };
 
     ipcRenderer.send('save-smtp-settings', smtpConfig);
-    alert('SMTP settings saved!');
+    alert('save smtp config finished.');
 });
 
 // Send email(s)
@@ -75,10 +75,22 @@ ipcRenderer.on('email-error', (event, errorMessage) => {
 });
 
 
-window.electronAPI.invokeMain('get-smtp-config')
-    .then(config => {
-        console.log('Loaded SMTP Config:', config);
-    })
-    .catch(error => {
-        console.error('Error loading SMTP config:', error);
-    });
+ipcRenderer.on('smtp-config', (event, config) => {
+    document.getElementById('smtpHost').value = config.host || '';
+    document.getElementById('smtpPort').value = config.port || '';
+    document.getElementById('smtpSecure').checked = config.secure || false;
+    document.getElementById('smtpEmail').value = config.user || '';
+    document.getElementById('smtpPassword').value = config.pass || '';
+    document.getElementById('fromEmail').value = config.user || '';
+});
+
+// 日志输出函数
+function appendLog(message) {
+    const logOutput = document.getElementById('log-output');
+    logOutput.textContent += message + '\n';
+    logOutput.scrollTop = logOutput.scrollHeight; // 自动滚动到底部
+}
+
+ipcRenderer.on("log-message", (event, message) => {
+    appendLog(message)
+});

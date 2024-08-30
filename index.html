@@ -18,7 +18,7 @@
             <input type="email" id="fromEmail" required />
           </div>
           <div>
-            <label>To:</label>
+            <label>To(多账号用逗号分隔):</label>
             <input type="text" id="toEmails" required />
           </div>
           <div>
@@ -37,8 +37,11 @@
             <label>附件:</label>
             <input type="file" id="attachments" multiple />
           </div>
+          <br>
           <button type="submit">发送邮件</button>
         </form>
+        <p id="status"></p>
+        <div id="log-output" class="log-output"></div> <!-- 新增日志输出区域 -->
       </div>
       <!-- SMTP Account Settings -->
       <div class="right-panel">
@@ -63,16 +66,16 @@
             <input type="email" id="smtpEmail" required />
           </div>
           <div>
-            <label>Password:</label>
+            <label>Password (163授权码):</label>
             <input type="password" id="smtpPassword" required />
           </div>
           <button type="submit">Save SMTP</button>
         </form>
       </div>
 
-      <p id="status"></p>
+      
     </div>
 
-    <script src="send.js"></script>
+    <script src="renderer.js"></script>
   </body>
 </html>

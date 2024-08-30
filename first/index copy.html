@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Email</title>
+</head>
+<body>
+    <h1>Send Email using SMTP</h1>
+    <form id="emailForm">
+        <div>
+            <label>From:</label>
+            <input type="email" id="fromEmail" required>
+        </div>
+        <div>
+            <label>To:</label>
+            <input type="email" id="toEmail" required>
+        </div>
+        <div>
+            <label>Subject:</label>
+            <input type="text" id="subject" required>
+        </div>
+        <div>
+            <label>Message:</label>
+            <textarea id="message" required></textarea>
+        </div>
+        <button type="submit">Send Email</button>
+    </form>
+    <p id="status"></p>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+
+        const emailForm = document.getElementById('emailForm');
+        const statusText = document.getElementById('status');
+
+        emailForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const emailConfig = {
+                host: 'smtp.163.com', // 使用163邮箱的SMTP服务器
+                port: 465,
+                secure: true,
+                user: 'fpack@163.com',
+                pass: 'SVVTCPXAHQPFIZDN', // 替换为你的授权码
+                from: document.getElementById('fromEmail').value,
+                to: document.getElementById('toEmail').value,
+                subject: document.getElementById('subject').value,
+                text: document.getElementById('message').value,
+                html: document.getElementById('message').value // 使用HTML内容发送
+            };
+
+            // 发送邮件
+            ipcRenderer.send('send-email', emailConfig);
+        });
+
+        ipcRenderer.on('email-sent', (event, message) => {
+            statusText.textContent = message;
+        });
+
+        ipcRenderer.on('email-error', (event, errorMessage) => {
+            statusText.textContent = errorMessage;
+        });
+    </script>
+</body>
+</html>
